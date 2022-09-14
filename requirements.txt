@@ -1,0 +1,4 @@
+nltk
+stanza
+scikit-learn
+numpy
