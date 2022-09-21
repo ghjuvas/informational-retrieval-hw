@@ -2,13 +2,13 @@
 Module for computing index by mode.
 '''
 from collections import defaultdict
-from typing import Tuple
-import numpy as np
+from typing import Tuple, Union
 from scipy.sparse._csr import csr_matrix
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
 
-def matrix_index(lemmas: dict) -> Tuple[CountVectorizer, csr_matrix]:
+def matrix_index(vectorizer: Union[CountVectorizer, TfidfVectorizer],
+    lemmas: dict) -> Tuple[CountVectorizer, csr_matrix]:
     '''
     Compute inverted index in the form of a matrix.
     '''
@@ -17,7 +17,7 @@ def matrix_index(lemmas: dict) -> Tuple[CountVectorizer, csr_matrix]:
     lemmas = [' '.join(text_lemmas) for text_lemmas in list(lemmas.values())]
 
     # transform to index
-    vectorizer = CountVectorizer(analyzer='word')
+    vectorizer = vectorizer(analyzer='word')
     X = vectorizer.fit_transform(lemmas)
 
     return vectorizer, X
