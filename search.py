@@ -50,7 +50,7 @@ def initialize_parser() -> argparse.ArgumentParser:
     )
     search.add_argument(
         '-p', '--path', type=str,
-        help='path to directory with corpuses; default - search on "Friends" corpus')
+        help='path to directory with corpuses to index')
 
     return parser
 
