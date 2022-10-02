@@ -15,8 +15,8 @@ This repository is for code for homeworks on the course "Informational Retrieval
 * Topic: **TF-IDF and similarity of documents**
 * Libraries: `argparse`, `logging`, `os`, `collections`, `string`, `typing`, `pickle` - standard library; `nltk`, `stanza`, `numpy`, `scikit-learn`, `scipy`
 * Program code: `search.py` (main), `nlp.py`, `compute_index.py`, `similarity.py`
-* Usage: `python3 search.py -p friends-data книжный шкаф` - to compute index from corpus and then search by query "книжный шкаф" or `python3 search.py книжный шкаф` - to search by query "книжный шкаф"
-* **Important!** Search from precomputed index is performed using the following files (must exist in the current folder): `index.npz` - precomputed index, `vectorizer.pkl` - fitted vectorizer on the data, `docs_list.txt` - list of names of the documents.
+* Usage: `python3 search.py search -p friends-data книжный шкаф` - to compute index from corpus and then search by query "книжный шкаф" or `python3 search.py search книжный шкаф` - to search by query "книжный шкаф"
+* **Important!** Search from precomputed index is performed using the following files (must exist in the current folder): `index.npz` - precomputed index, `vectorizer.pkl` - fitted vectorizer on the data, `docs_list.txt` - list of the names of the documents.
 
 ### Documentation
 1. **search**
