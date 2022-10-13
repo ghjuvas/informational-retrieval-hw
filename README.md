@@ -30,10 +30,10 @@ This repository is for code for homeworks on the course "Informational Retrieval
 * Topic: **BERT embeddings and evaluation**
 * Libraries: `argparse`, `logging`, `os`, `collections`, `string`, `typing`, `pickle` - standard library; `nltk`, `stanza`, `numpy`, `scikit-learn`, `scipy`, `torch`, `transformers`
 * Program code: `search.py` (main), `nlp.py`, `compute_index.py`, `similarity.py`, `evaluation.py`
-* Usage: `python3 search.py evaluation -f love-corpus/data.jsonl` - to run computing of the indexes and evaluation, `python3 search.py evaluation -d questions.txt answers.txt lem_questions.txt lem_answers.txt`, `python3 search.py evaluation -p bert_index.npy bm25_index.npz vectorizer.pkl docs_list.txt` - to run evaluation on the precomputed indexes.
+* Usage: `python3 search.py evaluation -f love-corpus/data.jsonl` - to run computing of the indexes and evaluation, `python3 search.py evaluation -d questions.txt answers.txt lem_questions.txt lem_answers.txt` - to run computing of the indexes and evaluation from documents with raw and lemmatized data, `python3 search.py evaluation -p  bm25_index.npz vectorizer.pkl bert_index.npy bert_query_index.npy docs_list.txt` - to run evaluation on the precomputed indexes.
 * **Important!** We use 50.000 texts to create an index to search, their morphological and syntactical preprocessing can take time and encoding by BERT can take time.
-* **Additional** For your convenience, we also save texts and parses of the documents in the separated files on your computer. You can use arguments to run the evaluation from the raw and preprocessed texts.
-* **How to get the test data?** By [this path](https://drive.google.com/drive/folders/1cMjROa4YyDQbYJEFZDAMyB5FqtW6-Cnb?usp=sharing) you can get all the needed data.
+* **Additional** For your convenience, we also save texts and parsings of the documents in the separated files on your computer. You can use arguments to run the evaluation from the raw and preprocessed texts.
+* **How to get the test data?** By [this path](https://drive.google.com/drive/folders/1cMjROa4YyDQbYJEFZDAMyB5FqtW6-Cnb?usp=sharing) you can get all of the needed data.
 
 ### Documentation
 1. **search**
