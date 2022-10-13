@@ -7,6 +7,12 @@ import numpy as np
 from scipy.sparse._csr import csr_matrix
 from scipy import sparse
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from transformers import AutoTokenizer, AutoModel
+import torch
+
+# load AutoModel from huggingface model repository
+tokenizer = AutoTokenizer.from_pretrained("sberbank-ai/sbert_large_nlu_ru")
+model = AutoModel.from_pretrained("sberbank-ai/sbert_large_nlu_ru")
 
 K = 2
 B = 0.75
@@ -25,7 +31,7 @@ def matrix_index(vectorizer: Union[CountVectorizer, TfidfVectorizer],
     return vectorizer, X
 
 
-def bm25_matrix_index(lemmas: list) -> Tuple[CountVectorizer]:
+def bm25_matrix_index(lemmas: list) -> Tuple[CountVectorizer, csr_matrix]:
     '''
     Compute index by BM25 measure.
     '''
@@ -56,6 +62,52 @@ def bm25_matrix_index(lemmas: list) -> Tuple[CountVectorizer]:
     index = sparse.csr_matrix((data, (rows, columns)), shape=tf.shape)
 
     return count_vectorizer, index
+
+
+def bert_matrix_index(texts: Union[list, str]):
+    '''
+    Compute inverted index by BERT encoder in the form of a matrix.
+    '''
+
+    # tokenize sentences (without preprocessing)
+    encoded_input = tokenizer(
+        texts, padding=True,
+        truncation=True, max_length=24,
+        return_tensors='pt')
+
+    # compute token embeddings
+    with torch.no_grad():
+        model_output = model(**encoded_input)
+
+    # pooling
+    token_embeddings = model_output[0] # first element of model_output contains all token embeddings
+    input_mask_expanded = encoded_input['attention_mask'].unsqueeze(-1).expand(token_embeddings.size()).float()
+    sum_embeddings = torch.sum(token_embeddings * input_mask_expanded, 1)
+    sum_mask = torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+    sentence_embeddings = sum_embeddings / sum_mask
+    sentence_embeddings = sentence_embeddings.detach().cpu().numpy()  # to array
+
+    return sentence_embeddings
+
+
+def bert_index_from_batches(texts: list):
+    '''
+    Get encoded representations of the parts of the texts by BERT
+    and concatenate them to full numpy array.
+    '''
+    batch_size = 50
+
+    res = []
+    i = 0
+    while i < len(texts):
+        part = texts[i:i+batch_size]
+        batch = bert_matrix_index(part)
+        res.append(batch)
+        i += batch_size
+
+    matrix = np.concatenate(res, axis=0)
+
+    return matrix
 
 
 def dictionary_index(lemmas: dict) -> defaultdict:

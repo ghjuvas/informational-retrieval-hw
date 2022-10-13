@@ -1,3 +1,6 @@
+'''
+Module for computing similarity between documents and queries.
+'''
 from typing import Union
 import numpy as np
 from scipy.sparse._csr import csr_matrix
@@ -25,7 +28,7 @@ def compute_cosine_similarity(query_vector: Union[csr_matrix, np.ndarray],
 
 
 def compute_dot_product(query_vector: Union[csr_matrix, np.ndarray],
-                        index: Union[csr_matrix, np.ndarray]):
+                        index: Union[csr_matrix, np.ndarray]) -> np.ndarray:
     '''
     Compute similarity between query and documents by dot product.
     '''
@@ -34,7 +37,7 @@ def compute_dot_product(query_vector: Union[csr_matrix, np.ndarray],
     return similarities
 
 
-def sort_scores(similarities: Union[csr_matrix, np.ndarray], docs: list):
+def sort_scores(similarities: Union[csr_matrix, np.ndarray], docs: list) -> np.ndarray:
     '''
     Sort scores after computing similarities.
     '''
@@ -43,5 +46,4 @@ def sort_scores(similarities: Union[csr_matrix, np.ndarray], docs: list):
     sorted_scores = np.argsort(similarities, axis=0)[::-1]  # arg -> index
     docs = np.array(docs)
 
-    for idx, doc in enumerate(list(docs[sorted_scores.ravel()])):
-        print(f'{idx}.', doc)
+    return sorted_scores, docs

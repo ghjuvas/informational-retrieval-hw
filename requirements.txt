@@ -3,3 +3,5 @@ stanza
 scikit-learn
 numpy
 tqdm
+torch
+transformers
