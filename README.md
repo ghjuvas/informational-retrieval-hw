@@ -26,7 +26,7 @@ This repository is for code for homeworks on the course "Informational Retrieval
 * **Important!** Search from precomputed index is performed using the following files (must exist in the current folder): `index.npz` - precomputed index, `vectorizer.pkl` - fitted vectorizer on the data, `docs_list.txt` - list of the names of the documents.
 * **Important!** We use 50.000 texts to create an index to search, their morphological and syntactical preprocessing can take time.
 
-## Homework #3
+## Homework #4
 * Topic: **BERT embeddings and evaluation**
 * Libraries: `argparse`, `logging`, `os`, `collections`, `string`, `typing`, `pickle` - standard library; `nltk`, `stanza`, `numpy`, `scikit-learn`, `scipy`, `torch`, `transformers`
 * Program code: `search.py` (main), `nlp.py`, `compute_index.py`, `similarity.py`, `evaluation.py`
